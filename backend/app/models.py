@@ -98,6 +98,35 @@ class ExamRecord(db.Model):
         }
 
 
+class ScoreReview(db.Model):
+    __tablename__ = "score_reviews"
+
+    id = db.Column(db.Integer, primary_key=True)
+    student_name = db.Column(db.String(60), nullable=False)
+    subject = db.Column(db.String(20), nullable=False)
+    original_score = db.Column(db.Integer, nullable=False)
+    reason = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.String(20), nullable=False, default="待审核")
+    result = db.Column(db.String(20), nullable=True)
+    reviewed_at = db.Column(db.DateTime, nullable=True)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "studentName": self.student_name,
+            "subject": self.subject,
+            "originalScore": self.original_score,
+            "reason": self.reason,
+            "status": self.status,
+            "result": self.result,
+            "reviewedAt": self.reviewed_at.isoformat(timespec="seconds")
+            if self.reviewed_at
+            else None,
+            "createdAt": self.created_at.isoformat(timespec="seconds"),
+        }
+
+
 class Makeup(db.Model):
     __tablename__ = "makeups"
 

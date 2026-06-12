@@ -29,3 +29,13 @@ export const ruleApi = {
   list: () => api.get('/api/rules'),
   update: (id, payload) => api.patch(`/api/rules/${id}`, payload)
 }
+
+export const reviewApi = {
+  list: (params = {}) => {
+    const query = new URLSearchParams(params)
+    const suffix = query.toString() ? `?${query}` : ''
+    return api.get(`/api/reviews${suffix}`)
+  },
+  create: (payload) => api.post('/api/reviews', payload),
+  update: (id, payload) => api.patch(`/api/reviews/${id}`, payload)
+}
